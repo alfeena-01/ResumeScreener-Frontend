@@ -31,6 +31,7 @@ function buildHeaders(requireAuth = false): HeadersInit {
 async function handleResponse(res: Response) {
   const json = await res.json().catch(() => null);
   if (!res.ok) {
+    console.log("Backend Error Response:", json); // 👈 ADD THIS
     const error = json?.error || json?.message || res.statusText;
     throw new Error(error);
   }
