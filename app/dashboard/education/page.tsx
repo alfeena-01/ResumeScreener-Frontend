@@ -28,14 +28,15 @@ export default function EducationPage() {
   useEffect(() => {
     try {
       const stored = localStorage.getItem("education");
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (stored) setEducationList(JSON.parse(stored));
-    } catch (e) {}
+    } catch { }
   }, []);
 
   useEffect(() => {
     try {
       localStorage.setItem("education", JSON.stringify(educationList));
-    } catch (e) {}
+    } catch { }
   }, [educationList]);
 
   return (
@@ -97,7 +98,7 @@ export default function EducationPage() {
         </button>
       </div>
 
-  
+
       <div className="grid md:grid-cols-2 gap-8">
         {educationList.map((edu, index) => (
           <div

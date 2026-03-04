@@ -28,20 +28,21 @@ export default function ExperiencePage() {
   useEffect(() => {
     try {
       const stored = localStorage.getItem("experiences");
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (stored) setExperiences(JSON.parse(stored));
-    } catch (e) {}
+    } catch { }
   }, []);
 
   useEffect(() => {
     try {
       localStorage.setItem("experiences", JSON.stringify(experiences));
-    } catch (e) {}
+    } catch { }
   }, [experiences]);
 
   return (
     <div className="space-y-10">
 
-  
+
       <div>
         <h1 className="text-3xl font-semibold text-[#1F2937]">
           Professional Experience
@@ -51,7 +52,7 @@ export default function ExperiencePage() {
         </p>
       </div>
 
-     
+
       <div className="bg-white p-10 rounded-3xl shadow-md border border-[#F5E6D3]">
         <h2 className="text-xl font-semibold text-[#E39A2D] mb-8">
           Add Experience
@@ -97,7 +98,7 @@ export default function ExperiencePage() {
         </button>
       </div>
 
-    
+
       <div className="space-y-8">
         {experiences.map((exp, index) => (
           <div

@@ -19,7 +19,7 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const data = await login({ username: email, password });
+      const data = await login({ email, password });
       saveSession(data);
 
       // redirect based on type
@@ -28,9 +28,10 @@ export default function LoginPage() {
       } else {
         router.push("/dashboard");
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Login error:", err);
-      setError(err.message || "Network error. Make sure backend is running at http://localhost:8000");
+      const errorMessage = err instanceof Error ? err.message : "Network error. Make sure backend is running at http://localhost:8000";
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -38,7 +39,7 @@ export default function LoginPage() {
 
   return (
     <div className="bg-white p-10 rounded-3xl shadow-xl border border-[#F5E6D3]">
-      
+
       <h1 className="text-2xl font-semibold text-[#1F2937] mb-2">
         Welcome Back
       </h1>

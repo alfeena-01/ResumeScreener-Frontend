@@ -43,6 +43,7 @@ export interface SignUpPayload {
   username: string;
   email: string;
   password: string;
+  password_confirm: string;
   user_type: "job_seeker" | "hr";
 }
 
@@ -55,7 +56,7 @@ export function signup(payload: SignUpPayload) {
 }
 
 export interface LoginPayload {
-  username: string;
+  email: string;
   password: string;
 }
 
@@ -83,7 +84,7 @@ export interface JobData {
   description: string;
   location?: string;
   is_active?: boolean;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export function listJobs() {

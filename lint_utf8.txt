@@ -1,0 +1,233 @@
+﻿
+> my-app@0.1.0 lint
+> eslint
+
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\auth\login\page.tsx
+  31:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\auth\signup\page.tsx
+  38:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\dashboard\education\page.tsx
+  31:19  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\dashboard\education\page.tsx:31:19
+  29 |     try {
+  30 |       const stored = localStorage.getItem("education");
+> 31 |       if (stored) setEducationList(JSON.parse(stored));
+     |                   ^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  32 |     } catch (e) {}
+  33 |   }, []);
+  34 |  react-hooks/set-state-in-effect
+  32:14  warning  'e' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+  38:14  warning  'e' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\dashboard\experience\page.tsx
+  31:19  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\dashboard\experience\page.tsx:31:19
+  29 |     try {
+  30 |       const stored = localStorage.getItem("experiences");
+> 31 |       if (stored) setExperiences(JSON.parse(stored));
+     |                   ^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  32 |     } catch (e) {}
+  33 |   }, []);
+  34 |  react-hooks/set-state-in-effect
+  32:14  warning  'e' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+  38:14  warning  'e' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\dashboard\find-jobs\page.tsx
+  39:6  warning  React Hook useEffect has a missing dependency: 'fetchJobs'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\dashboard\layout.tsx
+  20:25  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\dashboard\layout.tsx:20:25
+  18 |     const storedUserType = localStorage.getItem("user_type");
+  19 |     
+> 20 |     if (storedUsername) setUsername(storedUsername);
+     |                         ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  21 |     if (storedUserType) setUserType(storedUserType);
+  22 |   }, []);
+  23 |  react-hooks/set-state-in-effect
+  45:15  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @next/next/no-img-element
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\dashboard\page.tsx
+  10:50  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-explicit-any
+  11:54  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-explicit-any
+  32:11  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\dashboard\page.tsx:32:11
+  30 |         const fullName = `${profileData.firstName || ""} ${profileData.lastName || ""}`.trim();
+  31 |         if (fullName) {
+> 32 |           setProfileName(fullName);
+     |           ^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  33 |         }
+  34 |       }
+  35 |     } catch (e) {}  react-hooks/set-state-in-effect
+  35:14  warning  'e' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+  40:14  warning  'e' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+  44:14  warning  'e' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+  48:14  warning  'e' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+  52:14  warning  'e' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+  67:16  warning  'e' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\dashboard\resume\page.tsx
+  14:16  warning  'e' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\dashboard\skills\page.tsx
+  12:19  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\dashboard\skills\page.tsx:12:19
+  10 |     try {
+  11 |       const stored = localStorage.getItem("skills");
+> 12 |       if (stored) setSkills(JSON.parse(stored));
+     |                   ^^^^^^^^^ Avoid calling setState() directly within an effect
+  13 |     } catch (e) {}
+  14 |   }, []);
+  15 |  react-hooks/set-state-in-effect
+  13:14  warning  'e' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+  19:14  warning  'e' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\hr-dashboard\analytics\page.tsx
+  18:27  error  Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\hr-dashboard\analytics\page.tsx:18:27
+  16 |             <h2 className="text-[#6B7280]">{item}</h2>
+  17 |             <p className="text-3xl font-bold text-[#E39A2D] mt-3">
+> 18 |               {Math.floor(Math.random() * 50) + 5}
+     |                           ^^^^^^^^^^^^^ Cannot call impure function
+  19 |             </p>
+  20 |           </div>
+  21 |         ))}  react-hooks/purity
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\hr-dashboard\company\page.tsx
+  16:7  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\hr-dashboard\company\page.tsx:16:7
+  14 |     const saved = localStorage.getItem("companyData");
+  15 |     if (saved) {
+> 16 |       setCompany(JSON.parse(saved));
+     |       ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  17 |     }
+  18 |   }, []);
+  19 |  react-hooks/set-state-in-effect
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\hr-dashboard\layout.tsx
+  20:25  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\hr-dashboard\layout.tsx:20:25
+  18 |     const storedUserType = localStorage.getItem("user_type");
+  19 |     
+> 20 |     if (storedUsername) setUsername(storedUsername);
+     |                         ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  21 |     if (storedUserType) setUserType(storedUserType);
+  22 |   }, []);
+  23 |  react-hooks/set-state-in-effect
+  44:15  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @next/next/no-img-element
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\hr-dashboard\page.tsx
+   8:42  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+   9:42  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+  25:23  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\hr-dashboard\page.tsx:25:23
+  23 |     const savedCompany = localStorage.getItem("companyData");
+  24 |
+> 25 |     if (savedProfile) setProfile(JSON.parse(savedProfile));
+     |                       ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  26 |     if (savedCompany) setCompany(JSON.parse(savedCompany));
+  27 |     
+  28 |     setLoading(false);  react-hooks/set-state-in-effect
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\hr-dashboard\post-job\page.tsx
+  71:39  error  Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\hr-dashboard\post-job\page.tsx:71:39
+  69 |             <p className="text-sm text-[#6B7280] mt-2">{job.type}</p>
+  70 |             <p className="mt-4 text-[#E39A2D] font-medium">
+> 71 |               Applicants: {Math.floor(Math.random() * 20) + 1}
+     |                                       ^^^^^^^^^^^^^ Cannot call impure function
+  72 |             </p>
+  73 |           </div>
+  74 |         ))}  react-hooks/purity
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\hr-dashboard\profile\page.tsx
+  15:7  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\hr-dashboard\profile\page.tsx:15:7
+  13 |     const saved = localStorage.getItem("hrProfile");
+  14 |     if (saved) {
+> 15 |       setProfile(JSON.parse(saved));
+     |       ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  16 |     }
+  17 |   }, []);
+  18 |  react-hooks/set-state-in-effect
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\lib\api.ts
+  86:18  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\lib\auth.ts
+  32:35  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+Γ£û 35 problems (19 errors, 16 warnings)
+

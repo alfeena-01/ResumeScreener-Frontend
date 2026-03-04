@@ -36,6 +36,7 @@ export default function FindJobsPage() {
     }
 
     fetchJobs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userType, router]);
 
   const fetchJobs = async () => {
@@ -132,9 +133,8 @@ export default function FindJobsPage() {
                 <div
                   key={job.id}
                   onClick={() => setSelectedJob(job)}
-                  className={`bg-white rounded-lg shadow p-6 cursor-pointer transition-all hover:shadow-lg border-l-4 ${
-                    selectedJob?.id === job.id ? "border-accent" : "border-gray-300"
-                  }`}
+                  className={`bg-white rounded-lg shadow p-6 cursor-pointer transition-all hover:shadow-lg border-l-4 ${selectedJob?.id === job.id ? "border-accent" : "border-gray-300"
+                    }`}
                 >
                   <div className="flex justify-between items-start">
                     <div className="flex-1">

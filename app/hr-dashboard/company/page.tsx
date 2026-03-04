@@ -13,6 +13,7 @@ export default function CompanyPage() {
   useEffect(() => {
     const saved = localStorage.getItem("companyData");
     if (saved) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setCompany(JSON.parse(saved));
     }
   }, []);

@@ -4,9 +4,20 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function HRDashboard() {
+  interface HRProfile {
+    name?: string;
+    email?: string;
+    designation?: string;
+  }
+  interface HRCompany {
+    name?: string;
+    location?: string;
+    website?: string;
+    description?: string;
+  }
   const router = useRouter();
-  const [profile, setProfile] = useState<any>(null);
-  const [company, setCompany] = useState<any>(null);
+  const [profile, setProfile] = useState<HRProfile | null>(null);
+  const [company, setCompany] = useState<HRCompany | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -22,9 +33,10 @@ export default function HRDashboard() {
     const savedProfile = localStorage.getItem("hrProfile");
     const savedCompany = localStorage.getItem("companyData");
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (savedProfile) setProfile(JSON.parse(savedProfile));
     if (savedCompany) setCompany(JSON.parse(savedCompany));
-    
+
     setLoading(false);
   }, [router]);
 

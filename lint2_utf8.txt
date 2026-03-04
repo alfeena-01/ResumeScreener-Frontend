@@ -1,0 +1,50 @@
+﻿
+> my-app@0.1.0 lint
+> eslint
+
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\dashboard\find-jobs\page.tsx
+  38:5  warning  Unused eslint-disable directive (no problems were reported from 'react-hooks/exhaustive-deps')
+  40:6  warning  React Hook useEffect has a missing dependency: 'fetchJobs'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\dashboard\skills\page.tsx
+  12:19  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\dashboard\skills\page.tsx:12:19
+  10 |     try {
+  11 |       const stored = localStorage.getItem("skills");
+> 12 |       if (stored) setSkills(JSON.parse(stored));
+     |                   ^^^^^^^^^ Avoid calling setState() directly within an effect
+  13 |     } catch (e) {}
+  14 |   }, []);
+  15 |  react-hooks/set-state-in-effect
+  13:14  warning  'e' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+  19:14  warning  'e' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\hr-dashboard\analytics\page.tsx
+  9:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\User\OneDrive\Desktop\Resume\my-app\app\hr-dashboard\analytics\page.tsx:9:5
+   7 |
+   8 |   useEffect(() => {
+>  9 |     setStats([
+     |     ^^^^^^^^ Avoid calling setState() directly within an effect
+  10 |       Math.floor(Math.random() * 50) + 5,
+  11 |       Math.floor(Math.random() * 50) + 5,
+  12 |       Math.floor(Math.random() * 50) + 5,  react-hooks/set-state-in-effect
+
+Γ£û 6 problems (2 errors, 4 warnings)
+  0 errors and 1 warning potentially fixable with the `--fix` option.
+

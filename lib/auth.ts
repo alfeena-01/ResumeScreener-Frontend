@@ -29,13 +29,24 @@ export const getAccessToken = (): string | null => {
  * Save tokens and a few user fields returned by the backend after login/signup.
  * Call this from page components when you receive a successful response.
  */
-export const saveSession = (data: any) => {
+export interface LoginResponse {
+  access: string;
+  refresh: string;
+  user?: {
+    user_type?: string;
+    username?: string;
+    email?: string;
+    id?: number | string;
+  };
+}
+
+export const saveSession = (data: LoginResponse) => {
   if (typeof window === "undefined" || !data) return;
   localStorage.setItem("access_token", data.access);
   localStorage.setItem("refresh_token", data.refresh);
-  localStorage.setItem("user_type", data.user?.user_type);
-  localStorage.setItem("username", data.user?.username);
-  localStorage.setItem("email", data.user?.email);
-  localStorage.setItem("user_id", String(data.user?.id));
+  if (data.user?.user_type) localStorage.setItem("user_type", data.user.user_type);
+  if (data.user?.username) localStorage.setItem("username", data.user.username);
+  if (data.user?.email) localStorage.setItem("email", data.user.email);
+  if (data.user?.id) localStorage.setItem("user_id", String(data.user.id));
 };
 

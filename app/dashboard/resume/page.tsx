@@ -11,14 +11,14 @@ export default function ResumePage() {
       setResume(file);
       try {
         localStorage.setItem("resumeName", file.name);
-      } catch (e) {}
+      } catch { }
     }
   };
 
   return (
     <div className="space-y-10">
 
-       <h1 className="text-3xl font-semibold text-[#1F2937]">
+      <h1 className="text-3xl font-semibold text-[#1F2937]">
         Resume
       </h1>
 
@@ -48,7 +48,7 @@ export default function ResumePage() {
           )}
         </div>
 
-  
+
         {/* <div className="bg-white p-8 rounded-3xl shadow-md border border-[#F5E6D3]">
           <h2 className="text-xl font-semibold text-[#1F2937] mb-6">
             Profile Status

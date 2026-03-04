@@ -16,7 +16,7 @@ export default function DashboardLayout({
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     const storedUserType = localStorage.getItem("user_type");
-    
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (storedUsername) setUsername(storedUsername);
     if (storedUserType) setUserType(storedUserType);
   }, []);
@@ -38,24 +38,25 @@ export default function DashboardLayout({
           <h2 className="text-2xl font-semibold tracking-wide text-[#F5C77A] mb-5">
             JobSeeker
           </h2>
-         <Link href="/dashboard/profile">
-             
+          <Link href="/dashboard/profile">
+
             <div className="flex mb-5">
-            <div className="bg-white w-12 h-12 rounded-full overflow-hidden flex items-center justify-center">
-              <img 
-                src="https://static.vecteezy.com/system/resources/thumbnails/020/911/731/small/profile-icon-avatar-icon-user-icon-person-icon-free-png.png" 
-                alt="profile" 
-                className="w-full h-full object-cover"
-              />
+              <div className="bg-white w-12 h-12 rounded-full overflow-hidden flex items-center justify-center">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://static.vecteezy.com/system/resources/thumbnails/020/911/731/small/profile-icon-avatar-icon-user-icon-person-icon-free-png.png"
+                  alt="profile"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="ml-3">
+                <h2 className="text-lg font-bold">{username}</h2>
+                <p className="text-sm text-gray-400">
+                  {userType === "hr" ? "HR/Recruiter" : "Job Seeker"}
+                </p>
+              </div>
             </div>
-            <div className="ml-3">
-              <h2 className="text-lg font-bold">{username}</h2>
-              <p className="text-sm text-gray-400">
-                {userType === "hr" ? "HR/Recruiter" : "Job Seeker"}
-              </p>
-            </div>
-          </div>
- </Link> 
+          </Link>
           <nav className="space-y-5 text-gray-300">
             <Link href="/dashboard" className="block hover:text-[#E39A2D] transition">
               Dashboard
@@ -78,7 +79,7 @@ export default function DashboardLayout({
             <Link href="/dashboard/education" className="block hover:text-[#E39A2D] transition">
               Education
             </Link>
-            <button 
+            <button
               onClick={handleLogout}
               className="block w-full text-left text-red-300 hover:text-red-400 transition"
             >

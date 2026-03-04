@@ -16,7 +16,7 @@ export default function HRLayout({
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     const storedUserType = localStorage.getItem("user_type");
-    
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (storedUsername) setUsername(storedUsername);
     if (storedUserType) setUserType(storedUserType);
   }, []);
@@ -41,8 +41,9 @@ export default function HRLayout({
           </h2>
           <div className="flex mb-5">
             <div className="bg-white w-12 h-12 rounded-full overflow-hidden flex items-center justify-center">
-              <img 
-                src="https://static.vecteezy.com/system/resources/thumbnails/020/911/731/small/profile-icon-avatar-icon-user-icon-person-icon-free-png.png" 
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://static.vecteezy.com/system/resources/thumbnails/020/911/731/small/profile-icon-avatar-icon-user-icon-person-icon-free-png.png"
                 alt="profile"
                 className="w-full h-full object-cover"
               />
@@ -61,7 +62,7 @@ export default function HRLayout({
             <Link href="/hr-dashboard/company" className="block hover:text-[#E39A2D]">Company</Link>
             <Link href="/hr-dashboard/post-job" className="block hover:text-[#E39A2D]">Post Job</Link>
             <Link href="/hr-dashboard/analytics" className="block hover:text-[#E39A2D]">Analytics</Link>
-            <button 
+            <button
               onClick={handleLogout}
               className="block w-full text-left text-red-300 hover:text-red-400 transition"
             >

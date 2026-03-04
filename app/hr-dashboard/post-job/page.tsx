@@ -6,6 +6,7 @@ interface Job {
   title: string;
   location: string;
   type: string;
+  applicants?: number;
 }
 
 export default function PostJob() {
@@ -18,7 +19,8 @@ export default function PostJob() {
 
   const handlePost = () => {
     if (form.title) {
-      setJobs([...jobs, form]);
+      const applicants = Math.floor(Math.random() * 20) + 1;
+      setJobs([...jobs, { ...form, applicants }]);
       setForm({ title: "", location: "", type: "" });
     }
   };
@@ -68,7 +70,7 @@ export default function PostJob() {
             <p className="text-[#E39A2D] mt-1">{job.location}</p>
             <p className="text-sm text-[#6B7280] mt-2">{job.type}</p>
             <p className="mt-4 text-[#E39A2D] font-medium">
-              Applicants: {Math.floor(Math.random() * 20) + 1}
+              Applicants: {job.applicants || 0}
             </p>
           </div>
         ))}

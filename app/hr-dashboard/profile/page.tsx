@@ -12,6 +12,7 @@ export default function HRProfilePage() {
   useEffect(() => {
     const saved = localStorage.getItem("hrProfile");
     if (saved) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setProfile(JSON.parse(saved));
     }
   }, []);

@@ -9,14 +9,15 @@ export default function SkillsPage() {
   useEffect(() => {
     try {
       const stored = localStorage.getItem("skills");
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (stored) setSkills(JSON.parse(stored));
-    } catch (e) {}
+    } catch { }
   }, []);
 
   useEffect(() => {
     try {
       localStorage.setItem("skills", JSON.stringify(skills));
-    } catch (e) {}
+    } catch { }
   }, [skills]);
 
   const addSkill = () => {
