@@ -7,9 +7,18 @@ class AuthService {
         console.log("UI Data:", data);
         console.log("UI User Data:", data.user); // ✅ if using nested structure
 
+        // Flatten the nested user data to match backend expectations
+        const flattenedData = {
+            email: data.user.email,
+            username: data.user.username,
+            password: data.user.password,
+            password_confirm: data.user.password_confirm,
+            user_type: data.user.user_type,
+        };
+
         const response = await apiRequest<AuthResponse>("/users/signup/", {
             method: "POST",
-            body: JSON.stringify(data),
+            body: JSON.stringify(flattenedData),
         });
 
         console.log("Signup Full Response:", response);

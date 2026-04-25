@@ -35,6 +35,8 @@ export default function SignupPage() {
 
     console.log("Full UI Data:", data);
     console.log("User Object:", data.user);
+    console.log("Email:", data.user.email);
+    console.log("Password:", data.user.password);
 
     try {
       const response = await authService.signup(data);
@@ -77,7 +79,7 @@ export default function SignupPage() {
           type="text"
           placeholder="Username"
           {...register("user.username", { required: "Username is required" })}
-          className="w-full border rounded-xl px-5 py-3"
+          className="w-full border-2 border-gray-300 rounded-xl px-5 py-3 bg-white text-black placeholder-gray-500 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 text-base"
         />
         {errors.user?.username && (
           <p className="text-red-500 text-sm">
@@ -90,7 +92,7 @@ export default function SignupPage() {
           type="email"
           placeholder="Email Address"
           {...register("user.email", { required: "Email is required" })}
-          className="w-full border rounded-xl px-5 py-3"
+          className="w-full border-2 border-gray-300 rounded-xl px-5 py-3 bg-white text-black placeholder-gray-500 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 text-base"
         />
         {errors.user?.email && (
           <p className="text-red-500 text-sm">
@@ -103,7 +105,7 @@ export default function SignupPage() {
           type="password"
           placeholder="Password"
           {...register("user.password", { required: "Password is required" })}
-          className="w-full border rounded-xl px-5 py-3"
+          className="w-full border-2 border-gray-300 rounded-xl px-5 py-3 bg-white text-black placeholder-gray-500 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 text-base tracking-widest"
         />
         {errors.user?.password && (
           <p className="text-red-500 text-sm">
@@ -118,7 +120,7 @@ export default function SignupPage() {
           {...register("user.password_confirm", {
             required: "Please confirm your password",
           })}
-          className="w-full border rounded-xl px-5 py-3"
+          className="w-full border-2 border-gray-300 rounded-xl px-5 py-3 bg-white text-black placeholder-gray-500 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 text-base tracking-widest"
         />
         {errors.user?.password_confirm && (
           <p className="text-red-500 text-sm">

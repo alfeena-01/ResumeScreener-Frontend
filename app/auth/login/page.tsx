@@ -18,6 +18,9 @@ export default function LoginPage() {
     setError("");
     setLoading(true);
 
+    console.log("Email:", email);
+    console.log("Password:", password);
+
     try {
       const data = await login({ email, password });
       saveSession(data);

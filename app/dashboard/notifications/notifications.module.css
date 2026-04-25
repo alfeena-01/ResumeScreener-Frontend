@@ -1,0 +1,126 @@
+.container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.notificationsList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.notificationCard {
+    background-color: white;
+    border-left: 4px solid #007bff;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.notificationCard:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.unread {
+    background-color: #f0f7ff;
+    border-left-color: #0056b3;
+}
+
+.read {
+    opacity: 0.8;
+    border-left-color: #6c757d;
+}
+
+.notificationHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.notificationTitle {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    flex: 1;
+}
+
+.notificationTime {
+    font-size: 12px;
+    color: #999;
+    margin-left: 10px;
+    white-space: nowrap;
+}
+
+.notificationMessage {
+    margin: 10px 0;
+    color: #666;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.companyInfo {
+    margin: 8px 0;
+    color: #555;
+    font-size: 13px;
+}
+
+.notificationActions {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.markReadBtn,
+.deleteBtn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.markReadBtn {
+    background-color: #007bff;
+    color: white;
+}
+
+.markReadBtn:hover {
+    background-color: #0056b3;
+}
+
+.deleteBtn {
+    background-color: #e9ecef;
+    color: #333;
+}
+
+.deleteBtn:hover {
+    background-color: #dee2e6;
+}
+
+.empty {
+    text-align: center;
+    color: #999;
+    padding: 20px;
+    font-style: italic;
+}
+
+.error {
+    color: #d32f2f;
+    padding: 15px;
+    background-color: #ffebee;
+    border-radius: 4px;
+}

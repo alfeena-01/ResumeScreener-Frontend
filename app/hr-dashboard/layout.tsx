@@ -34,7 +34,7 @@ export default function HRLayout({
   return (
     <div className="min-h-screen flex bg-[#FDF8F2]">
       {/* Sidebar */}
-      <aside className="w-72 bg-[#1F2937] text-white p-8 flex flex-col justify-between">
+      <aside className="fixed top-0 left-0 w-72 h-screen bg-[#1F2937] text-white p-8 flex flex-col justify-between z-10">
         <div>
           <h2 className="text-2xl font-semibold text-[#F5C77A] mb-5">
             HR Panel
@@ -61,6 +61,7 @@ export default function HRLayout({
             <Link href="/hr-dashboard/profile" className="block hover:text-[#E39A2D]">HR Profile</Link>
             <Link href="/hr-dashboard/company" className="block hover:text-[#E39A2D]">Company</Link>
             <Link href="/hr-dashboard/post-job" className="block hover:text-[#E39A2D]">Post Job</Link>
+            <Link href="/hr-dashboard/applications" className="block hover:text-[#E39A2D]">Applications</Link>
             <Link href="/hr-dashboard/analytics" className="block hover:text-[#E39A2D]">Analytics</Link>
             <button
               onClick={handleLogout}
@@ -76,7 +77,7 @@ export default function HRLayout({
         </p>
       </aside>
 
-      <main className="flex-1 p-12">
+      <main className="flex-1 p-12 ml-72">
         {children}
       </main>
     </div>

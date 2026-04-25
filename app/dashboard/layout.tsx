@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import NotificationBadge from "./NotificationBadge";
 
 export default function DashboardLayout({
   children,
@@ -33,7 +34,7 @@ export default function DashboardLayout({
 
   return (
     <div className="min-h-screen flex bg-[#FDF8F2]">
-      <aside className="w-72 bg-[#1F2937] text-white flex flex-col justify-between p-8">
+      <aside className="fixed top-0 left-0 w-72 h-screen bg-[#1F2937] text-white flex flex-col justify-between p-8 z-10">
         <div>
           <h2 className="text-2xl font-semibold tracking-wide text-[#F5C77A] mb-5">
             JobSeeker
@@ -67,6 +68,12 @@ export default function DashboardLayout({
             <Link href="/dashboard/find-jobs" className="block hover:text-[#E39A2D] transition">
               Find Jobs
             </Link>
+            <Link href="/dashboard/applications" className="block hover:text-[#E39A2D] transition">
+              My Applications
+            </Link>
+            <Link href="/dashboard/notifications" className="block hover:text-[#E39A2D] transition">
+              Notifications
+            </Link>
             <Link href="/dashboard/resume" className="block hover:text-[#E39A2D] transition">
               Resume
             </Link>
@@ -93,7 +100,10 @@ export default function DashboardLayout({
         </p>
       </aside>
 
-      <main className="flex-1 p-12">
+      <main className="flex-1 p-12 ml-72 relative">
+        <div className="absolute top-8 right-8">
+          <NotificationBadge />
+        </div>
         {children}
       </main>
     </div>

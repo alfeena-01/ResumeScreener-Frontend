@@ -84,6 +84,12 @@ export interface JobData {
   title: string;
   description: string;
   location?: string;
+  salary_min?: number | null;
+  salary_max?: number | null;
+  salary_currency?: 'INR' | 'USD' | 'AED';
+  job_type?: string;
+  company_name?: string;
+  requirements?: string;
   is_active?: boolean;
   [key: string]: unknown;
 }
