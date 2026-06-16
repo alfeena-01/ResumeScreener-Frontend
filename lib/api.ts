@@ -11,21 +11,74 @@ const BASE_URL =
     return raw.replace(/\/+$/g, "");
   })();
 
-function buildHeaders(requireAuth = false): HeadersInit {
-  const headers: HeadersInit = { "Content-Type": "application/json" };
+function buildHeaders(requireAuth = false, includeJsonContentType = true): HeadersInit {
+  const headers: HeadersInit = {};
+
+  if (includeJsonContentType) {
+    headers["Content-Type"] = "application/json";
+  }
 
   if (requireAuth) {
     const token = getAccessToken();
-    if (!token) {
-      // if we expected to be authenticated but there's no token,
-      // log the user out so that calling code can redirect to login.
-      logout();
-    } else {
+    if (token) {
       headers["Authorization"] = `Bearer ${token}`;
     }
   }
 
   return headers;
+}
+
+async function refreshAccessToken(): Promise<string | null> {
+  if (typeof window === "undefined") return null;
+  const refreshToken = localStorage.getItem("refresh_token");
+  if (!refreshToken) return null;
+
+  try {
+    const response = await fetch(`${BASE_URL}/users/login/refresh/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ refresh: refreshToken }),
+    });
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const data = await response.json();
+    if (data.access) {
+      localStorage.setItem("access_token", data.access);
+      return data.access;
+    }
+  } catch (error) {
+    console.error("Token refresh failed:", error);
+  }
+
+  return null;
+}
+
+async function authFetch(input: RequestInfo, init: RequestInit = {}): Promise<Response> {
+  const token = getAccessToken();
+  if (token) {
+    const headers = new Headers(init.headers || {});
+    headers.set("Authorization", `Bearer ${token}`);
+    init.headers = headers;
+  }
+
+  const response = await fetch(input, init);
+  if (response.status === 401) {
+    const newToken = await refreshAccessToken();
+    if (newToken) {
+      const headers = new Headers(init.headers || {});
+      headers.set("Authorization", `Bearer ${newToken}`);
+      init.headers = headers;
+      return fetch(input, init);
+    }
+    logout();
+  }
+
+  return response;
 }
 
 async function handleResponse(res: Response) {
@@ -66,7 +119,14 @@ export function login(payload: LoginPayload) {
     method: "POST",
     headers: buildHeaders(),
     body: JSON.stringify(payload),
-  }).then(handleResponse);
+  })
+    .then(handleResponse)
+    .catch((err) => {
+      console.error("Network or CORS error during login fetch:", err);
+      throw new Error(
+        `Network error. Ensure backend is running and reachable at ${BASE_URL} (CORS/mixed-content may block requests).`
+      );
+    });
 }
 
 // --- user info ------------------------------------------------------------
@@ -132,4 +192,4 @@ export function deleteJob(id: number) {
 }
 
 // export BASE_URL for debugging or other callers
-export { BASE_URL };
+export { BASE_URL, buildHeaders, authFetch };

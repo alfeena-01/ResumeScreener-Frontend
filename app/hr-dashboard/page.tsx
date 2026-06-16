@@ -41,7 +41,7 @@ export default function HRDashboard() {
   }, [router]);
 
   return (
-    <div className="min-h-screen bg-[#FFF8E1] p-8">
+    <div className="min-h-screen bg-[#FFF8E1] px-4 py-6 md:px-6 lg:px-8">
       {loading && (
         <div className="flex justify-center items-center py-20">
           <p className="text-[#E39A2D] font-semibold">Loading your HR dashboard...</p>
@@ -49,7 +49,7 @@ export default function HRDashboard() {
       )}
 
       {!loading && (
-        <div className="max-w-6xl mx-auto space-y-8">
+        <div className="max-w-7xl mx-auto space-y-8">
           <h1 className="text-4xl font-bold text-gray-800">
             HR Dashboard Overview
           </h1>
@@ -58,7 +58,7 @@ export default function HRDashboard() {
             {/* HR Profile Display */}
             <div className="bg-white p-8 rounded-2xl shadow-lg border-l-4 border-[#E1AD01]">
               <h2 className="text-2xl font-semibold text-[#E1AD01] mb-4">
-                👤 HR Profile
+                HR Profile
               </h2>
 
               {profile ? (
@@ -75,7 +75,7 @@ export default function HRDashboard() {
             {/* Company Display */}
             <div className="bg-white p-8 rounded-2xl shadow-lg border-l-4 border-[#E1AD01]">
               <h2 className="text-2xl font-semibold text-[#E1AD01] mb-4">
-                🏢 Company Details
+                Company Details
               </h2>
 
               {company ? (

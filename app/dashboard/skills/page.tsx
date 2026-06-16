@@ -1,64 +1,20 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function SkillsPage() {
-  const [skills, setSkills] = useState<string[]>([]);
-  const [input, setInput] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem("skills");
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      if (stored) setSkills(JSON.parse(stored));
-    } catch { }
-  }, []);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem("skills", JSON.stringify(skills));
-    } catch { }
-  }, [skills]);
-
-  const addSkill = () => {
-    if (input.trim()) {
-      setSkills([...skills, input]);
-      setInput("");
-    }
-  };
+    router.replace("/dashboard/profile");
+  }, [router]);
 
   return (
-    <div className="space-y-8">
-      <h1 className="text-3xl font-semibold text-[#1F2937]">
-        Skills
-      </h1>
-
-      <div className="bg-white p-10 rounded-3xl shadow-md border border-[#F5E6D3]">
-        <div className="flex gap-4 mb-8">
-          <input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Add a skill"
-            className="flex-1 border border-[#E5D3BC] rounded-xl px-5 py-3 focus:ring-2 focus:ring-[#E39A2D] outline-none"
-          />
-          <button
-            onClick={addSkill}
-            className="bg-[#E39A2D] text-white px-6 rounded-xl hover:bg-[#cc8424] transition"
-          >
-            Add
-          </button>
-        </div>
-
-        <div className="flex flex-wrap gap-4">
-          {skills.map((skill, index) => (
-            <span
-              key={index}
-              className="bg-[#FFF3DF] text-[#1F2937] px-5 py-2 rounded-full border border-[#F5C77A]"
-            >
-              {skill}
-            </span>
-          ))}
-        </div>
+    <div className="min-h-screen flex items-center justify-center bg-[#FDF8F2] p-6">
+      <div className="max-w-xl rounded-3xl border border-[#F5E6D3] bg-white p-8 text-center shadow-lg">
+        <p className="text-lg font-semibold text-[#1F2937]">Redirecting to your profile...</p>
+        <p className="mt-2 text-gray-500">Skills are now managed from your profile page.</p>
       </div>
     </div>
   );

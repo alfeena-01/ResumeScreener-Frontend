@@ -1,11 +1,16 @@
 import API_BASE_URL from "@/config/env";
 
+const buildApiUrl = (endpoint: string) => {
+  const base = API_BASE_URL.replace(/\/+$/g, "");
+  return `${base}/${endpoint.replace(/^\/+/, "")}`;
+};
+
 async function refreshAccessToken(): Promise<string | null> {
   const refreshToken = localStorage.getItem("refresh_token");
   if (!refreshToken) return null;
 
   try {
-    const response = await fetch(`${API_BASE_URL}/users/login/refresh/`, {
+    const response = await fetch(buildApiUrl("/users/login/refresh/"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -39,7 +44,7 @@ export async function apiRequest<T>(
       headers["Authorization"] = `Bearer ${token}`;
     }
 
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    const response = await fetch(buildApiUrl(endpoint), {
       ...options,
       headers,
     });
@@ -50,7 +55,7 @@ export async function apiRequest<T>(
       if (newToken) {
         // Retry with new token
         headers["Authorization"] = `Bearer ${newToken}`;
-        const retryResponse = await fetch(`${API_BASE_URL}${endpoint}`, {
+        const retryResponse = await fetch(buildApiUrl(endpoint), {
           ...options,
           headers,
         });

@@ -86,7 +86,7 @@ export default function DashboardPage() {
 
 
   return (
-    <div className="space-y-10">
+    <div className="max-w-7xl mx-auto space-y-10 px-4 py-6 sm:px-6 lg:px-8">
       {loading && (
         <div className="flex justify-center items-center py-20">
           <p className="text-[#E39A2D] font-semibold">Loading your dashboard...</p>
@@ -103,10 +103,9 @@ export default function DashboardPage() {
           </section>
 
 
-          <section className="grid grid-cols-1  gap-10">
+          <section className="grid grid-cols-1 gap-10 xl:grid-cols-[1.8fr_1fr]">
             <div className="bg-white p-8 rounded-3xl shadow-md border border-[#F5E6D3]">
-
-              <h1>PROFILE OVERVIEW</h1>
+              <h1 className="text-2xl font-semibold text-[#1F2937] mb-4">Profile Overview</h1>
               <div>
                 <p className="text-xl font-semibold">{profileName}</p>
                 <p className="mt-3 font-medium text-sm">Skills:</p>

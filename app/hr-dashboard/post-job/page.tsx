@@ -13,6 +13,8 @@ interface Job {
   salary_max: string | number;
   salary_currency: string;
   requirements: string;
+  level?: string;
+  key_skills?: string;
   applicants?: number;
 }
 
@@ -22,12 +24,7 @@ export default function PostJob() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [editingJobId, setEditingJobId] = useState<number | null>(null);
-
-  // AI JD Generator State
-  const [aiTitle, setAiTitle] = useState("");
-  const [aiLevel, setAiLevel] = useState("");
-  const [aiSkills, setAiSkills] = useState("");
-  const [isGeneratingJD, setIsGeneratingJD] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const initialFormState: Job = {
     title: "",
@@ -39,11 +36,11 @@ export default function PostJob() {
     salary_max: "",
     salary_currency: "INR",
     requirements: "",
+    level: "",
+    key_skills: "",
   };
 
   const [form, setForm] = useState<Job>(initialFormState);
-
-  const token = typeof window !== "undefined" ? localStorage.getItem("access_token") : null;
 
   useEffect(() => {
     fetchJobs();
@@ -65,12 +62,14 @@ export default function PostJob() {
 
   const fetchJobs = async () => {
     try {
-      if (!token) return;
+      const currentToken = typeof window !== "undefined" ? localStorage.getItem("access_token") : null;
+      if (!currentToken) return;
+      
       const headers: Record<string, string> = {
         "Content-Type": "application/json",
       };
-      if (token && token !== "null" && token !== "undefined") {
-        headers["Authorization"] = `Bearer ${token}`;
+      if (currentToken && currentToken !== "null" && currentToken !== "undefined") {
+        headers["Authorization"] = `Bearer ${currentToken}`;
       }
 
       const response = await fetch(`http://localhost:8000/api/users/jobs/?own=true&t=${new Date().getTime()}`, {
@@ -92,6 +91,12 @@ export default function PostJob() {
   const handlePost = async () => {
     if (!form.title || !form.location || !form.job_type || !form.company_name || !form.description || !form.requirements) {
       setError("Please fill out all required fields (Title, Company, Location, Type, Description, Requirements).");
+      return;
+    }
+
+    const currentToken = typeof window !== "undefined" ? localStorage.getItem("access_token") : null;
+    if (!currentToken) {
+      setError("Authentication required. Please log in again.");
       return;
     }
 
@@ -118,7 +123,7 @@ export default function PostJob() {
         method: method,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${currentToken}`,
         },
         body: JSON.stringify(payload),
       });
@@ -153,6 +158,8 @@ export default function PostJob() {
         salary_max: "",
         salary_currency: "INR",
         requirements: "",
+        level: "",
+        key_skills: "",
       });
       setEditingJobId(null);
       fetchJobs();
@@ -168,24 +175,61 @@ export default function PostJob() {
   };
 
   const handleGenerateJD = async () => {
-    setIsGeneratingJD(true);
+    const currentToken = typeof window !== "undefined" ? localStorage.getItem("access_token") : null;
+    
+    if (!currentToken) {
+      setError("Authentication required. Please log in again.");
+      return;
+    }
+
+    if (!form.title || !form.title.trim()) {
+      setError("Please enter a job title first.");
+      return;
+    }
+
+    if (!form.key_skills || !form.key_skills.trim()) {
+      setError("Please enter key skills first.");
+      return;
+    }
+
+    setIsGenerating(true);
     setError("");
     try {
       const response = await fetch("http://localhost:8000/api/users/jobs/generate-description/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${currentToken}`,
         },
         body: JSON.stringify({
-          title: aiTitle,
-          level: aiLevel,
-          skills: aiSkills,
+          title: form.title,
+          level: form.level,
+          skills: form.key_skills,
         }),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to generate JD");
+        let errorMessage = "Failed to generate JD";
+        const contentType = response.headers.get("content-type");
+        
+        if (response.status === 401) {
+          errorMessage = "Session expired. Please log in again.";
+        } else if (response.status === 403) {
+          errorMessage = "You don't have permission to generate JDs. Only HR users can use this feature.";
+        } else if (response.status === 500) {
+          errorMessage = "Server error. Please try again later.";
+        } else if (contentType && contentType.includes("application/json")) {
+          try {
+            const errData = await response.json();
+            errorMessage = errData.error || errData.requirements || errData.description ||
+              (typeof errData === 'object' ? Object.values(errData).flat().join(" ") : errorMessage);
+          } catch {
+            errorMessage = `Server error: ${response.status}`;
+          }
+        } else {
+          errorMessage = `Server error: ${response.status}`;
+        }
+        throw new Error(errorMessage);
       }
 
       const data = await response.json();
@@ -203,11 +247,13 @@ export default function PostJob() {
         description: descText || "API returned an unexpected format.",
         requirements: reqsText || "API returned an unexpected format.",
       }));
+      setSuccess("Job description generated successfully!");
+      setTimeout(() => setSuccess(""), 3000);
     } catch (err) {
       console.error("AI Generation Error:", err);
-      setError("AI Generation failed. Ensure you have the GEMINI_API_KEY configured on the backend.");
+      setError(err instanceof Error ? err.message : "AI Generation failed. Please try again.");
     } finally {
-      setIsGeneratingJD(false);
+      setIsGenerating(false);
     }
   };
 
@@ -223,6 +269,8 @@ export default function PostJob() {
       salary_max: job.salary_max || "",
       salary_currency: job.salary_currency || "INR",
       requirements: job.requirements,
+      level: job.level || "",
+      key_skills: job.key_skills || "",
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -233,13 +281,19 @@ export default function PostJob() {
       return;
     }
 
+    const currentToken = typeof window !== "undefined" ? localStorage.getItem("access_token") : null;
+    if (!currentToken) {
+      setError("Authentication required. Please log in again.");
+      return;
+    }
+
     if (!confirm("Are you sure you want to delete this job? This cannot be undone.")) return;
 
     try {
       const response = await fetch(`http://localhost:8000/api/users/jobs/${jobId}/`, {
         method: "DELETE",
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${currentToken}`,
         },
       });
 
@@ -340,51 +394,37 @@ export default function PostJob() {
               <option value="AED">AED</option>
             </select>
           </div>
-        </div>
-
-        {/* AI Job Description Generator */}
-        <div className="bg-amber-50 p-6 rounded-2xl border border-amber-200">
-          <h3 className="text-xl font-semibold mb-4 text-amber-900 flex items-center">
-            <span className="mr-2">✨</span> AI Job Description Generator
-          </h3>
-          <p className="text-amber-800 text-sm mb-4">Save time! Let AI write a professional JD for you. Just enter a few details below.</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-             <input
-              placeholder="Role Title (e.g. Senior Frontend Developer)"
-              value={aiTitle}
-              onChange={(e) => setAiTitle(e.target.value)}
-              className="w-full border border-amber-300 rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-amber-500 bg-white"
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input
+              placeholder="Level (e.g. Junior, Mid, Senior)"
+              value={form.level}
+              onChange={(e) => setForm({ ...form, level: e.target.value })}
+              className="w-full border border-[#E5D3BC] rounded-xl px-5 py-3 focus:ring-2 focus:ring-[#E39A2D] outline-none"
             />
             <input
-              placeholder="Level (e.g. Mid, Senior, Lead)"
-              value={aiLevel}
-              onChange={(e) => setAiLevel(e.target.value)}
-              className="w-full border border-amber-300 rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-amber-500 bg-white"
+              placeholder="Key Skills (e.g. React, Python, Leadership)"
+              value={form.key_skills}
+              onChange={(e) => setForm({ ...form, key_skills: e.target.value })}
+              className="w-full border border-[#E5D3BC] rounded-xl px-5 py-3 focus:ring-2 focus:ring-[#E39A2D] outline-none"
             />
           </div>
-          <div className="mb-4">
-             <input
-              placeholder="Key Skills (e.g. React, TypeScript, Node.js)"
-              value={aiSkills}
-              onChange={(e) => setAiSkills(e.target.value)}
-              className="w-full border border-amber-300 rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-amber-500 bg-white"
-            />
-          </div>
-          <button
-             onClick={handleGenerateJD}
-             disabled={isGeneratingJD || !aiTitle || !aiSkills}
-             className="bg-amber-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-amber-600 disabled:opacity-50 transition"
-          >
-             {isGeneratingJD ? "Generating..." : "Generate Description & Requirements"}
-          </button>
         </div>
 
-        <textarea
-          placeholder="Job Description *"
-          value={form.description}
-          onChange={(e) => setForm({ ...form, description: e.target.value })}
-          className="w-full border border-[#E5D3BC] rounded-xl px-5 py-3 focus:ring-2 focus:ring-[#E39A2D] outline-none min-h-30"
-        />
+        <div className="relative">
+          <textarea
+            placeholder="Job Description *"
+            value={form.description}
+            onChange={(e) => setForm({ ...form, description: e.target.value })}
+            className="w-full border border-[#E5D3BC] rounded-xl px-5 py-3 focus:ring-2 focus:ring-[#E39A2D] outline-none min-h-30"
+          />
+          <button
+            onClick={handleGenerateJD}
+            disabled={isGenerating || !form.title || !form.key_skills}
+            className="absolute top-3 right-3 bg-[#E39A2D] text-white px-3 py-1 rounded-lg text-sm hover:bg-[#cc8424] disabled:opacity-50 transition flex items-center gap-1"
+          >
+            <span>✨</span> {isGenerating ? "Generating..." : "AI Generate"}
+          </button>
+        </div>
 
         <textarea
           placeholder="Requirements *"
@@ -406,7 +446,7 @@ export default function PostJob() {
             <button
               onClick={() => {
                 setEditingJobId(null);
-                setForm({ ...form, title: "", location: "", description: "", requirements: "" });
+                setForm({ ...form, title: "", location: "", description: "", requirements: "", level: "", key_skills: "" });
               }}
               className="bg-gray-200 text-gray-700 px-8 py-3 rounded-xl hover:bg-gray-300 transition"
             >
